@@ -1,0 +1,82 @@
+spring:
+    application:
+        name: g26appserver
+    profiles:
+        default: development
+    main:
+        banner-mode: "off"
+    jpa:
+        open-in-view: false
+        hibernate:
+            ddl-auto: none
+management:
+    endpoint:
+        health:
+            show-details: always
+            show-components: always
+---
+
+spring.config.activate.on-profile: development
+spring:
+    datasource:
+        url: jdbc:mysql://localhost:3306/mydatabase
+        username: myuser
+        password: secret
+        driverClassName: com.mysql.cj.jdbc.Driver
+    jpa:
+        show-sql: true
+    data:
+        redis:
+            host: localhost
+            port: 6381
+    cache:
+        type: redis
+logging:
+    level:
+        web: DEBUG
+management:
+    endpoints:
+        web:
+            exposure:
+                include: "*"
+        jmx:
+            exposure:
+                include: "*"
+    endpoint:
+        configprops:
+            show-values: ALWAYS
+
+---
+
+spring.config.activate.on-profile: production
+spring:
+    datasource:
+        url: jdbc:mysql://localhost:3306/g26finko
+        username: fvovan
+        password: nOtSekret!
+        driverClassName: com.mysql.cj.jdbc.Driver
+    data:
+        redis:
+            host: localhost
+            port: 6379
+    cache:
+        type: redis
+server:
+    tomcat:
+        connection-timeout: 3s
+        keep-alive-timeout: 10s
+        threads:
+            max: 400
+            min-spare: 100
+        accept-count: 200
+    forward-headers-strategy: FRAMEWORK
+management:
+    endpoints:
+        web:
+            exposure:
+                include: "health,prometheus,metrics,configprops"
+    endpoint:
+        configprops:
+            show-values: ALWAYS
+
+---
