@@ -65,8 +65,8 @@ public class DummyController {
 
         long totalTime = (System.nanoTime() - timeStart) / 1_000_000;
 
-        return "MD5 cycles over 1K-string: " + cycles + " \n"
-                + "Real timer total: " + totalTime + "\n"
+        return "Math cycles : " + cycles + " \n"
+                + "Real timer total : " + totalTime + "\n"
                 + "Thread CPU : " + cpuThreadTimeCounter / 1_000_000 + "\n"
                 + hashLength + dummy.charAt((int)hashLength - 1) + "\n";
     }
